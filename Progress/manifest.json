@@ -1,0 +1,22 @@
+{
+    "manifest_version": 3,
+    "name": "Mind Up!",
+    "description": "Base Level Extension",
+    "version": "1.0",
+    "permissions": ["activeTab"],
+    "host_permissions": ["<all_urls>"],
+    "action": {
+      "default_popup": "Worktime.html",
+      "default_icon": "Timer.png"   
+    },
+    "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self'"
+    },
+    "web_accessible_resources": [
+      {
+        "resources": ["Worktime.js", "Breaktime.js", "toe.js", "tac.css"],
+        "matches": ["<all_urls>"]
+      }
+    ]
+  }
+  

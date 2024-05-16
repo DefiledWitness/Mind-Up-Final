@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Games</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #963bca;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: #ffffff; 
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        p {
+            color: #ffffff; 
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            color: #ffffff; 
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #512da8; 
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+
+        button:hover {
+            background-color: #865dd8; 
+            transform: translateY(-3px); 
+        }
+
+        input[type="number"] {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ffffff; 
+            border-radius: 5px;
+            background-color: transparent;
+            color: #ffffff; 
+        }
+
+        iframe {
+            border: 2px solid #ffffff; 
+            border-radius: 5px;
+        }
+
+        #buttonContainer {
+            text-align: center;
+        }
+
+        #ticTacToeContainer {
+            background-color: #66268b; 
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+        }
+
+        #guessingGameContainer {
+            background-color: #66268b; 
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+        }
+
+        #cookieClickerContainer {
+            background-color: #66268b; 
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+        }
+
+        #startTimerButton {
+            position: sticky;
+            top: 20px;
+            z-index: 999; 
+        }
+
+        #cookieButton {
+            background-image: url('download.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            width: 100px; 
+            height: 100px; 
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Mini Games</h1>
+    <label for="timeInput">Set the time (in minutes):</label>
+    <input type="number" id="timeInput" min="1" step="1" value="5"> 
+    <button id="startButton">Start Timer</button>
+    <p>Your break has lasted for:</p>
+    <p id="display">00:00:00</p>
+    <div id="buttonContainer" style="display: none;">
+        <a href="Worktime.html">
+            <button>Your break is over! Click here to return to the work page.</button>
+        </a>
+    </div>
+
+    <div id="gamesContainer" style="display: none;">
+        <h2>Choose a Mini Game:</h2>
+        <button id="startTicTacToe">Tic Tac Toe</button>
+        <button id="startGuessingGame">Guessing Game</button>
+        <button id="startCookieClicker">Cookie Clicker</button>
+    </div>
+
+    <div id="ticTacToeContainer" style="display: none;">
+        <iframe id="ticTacToeFrame" src="tic.html" width="800" height="800" frameborder="0"></iframe>
+    </div>
+
+    <div id="guessingGameContainer" style="display: none;">
+        <h2>Guessing Game</h2>
+        <p>Guess a number between 1 and 100:</p>
+        <input type="number" id="guessInput">
+        <button id="checkGuess">Check Guess</button>
+        <p id="guessResult"></p>
+    </div>
+
+    <div id="cookieClickerContainer" style="display: none;">
+        <h2>Cookie Clicker</h2>
+        <p>Click the cookie to earn points:</p>
+        <button id="cookieButton" ></button>
+        <p>Points: <span id="cookiePoints">0</span></p>
+        <h3>Upgrades</h3>
+        <button id="buyUpgrade">Upgrade (Cost: 10 points)</button>
+        <p>Upgrade Level: <span id="upgradeLevel">0</span></p>
+    </div>
+
+</body>
+<script src="Breaktime.js"></script>
+</html>

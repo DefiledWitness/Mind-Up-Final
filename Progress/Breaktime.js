@@ -1,15 +1,27 @@
+
 let interval = null;
 let time = 0;
-const display = document.getElementById("display");
-const buttonContainer = document.getElementById("buttonContainer");
-const gamesContainer = document.getElementById("gamesContainer");
-const ticTacToeContainer = document.getElementById("ticTacToeContainer");
-const guessingGameContainer = document.getElementById("guessingGameContainer");
-const cookieClickerContainer = document.getElementById("cookieClickerContainer");
+let display, buttonContainer, gamesContainer, ticTacToeContainer, guessingGameContainer, cookieClickerContainer;
+
+document.addEventListener('DOMContentLoaded', function () {
+    display = document.getElementById("display");
+    buttonContainer = document.getElementById("buttonContainer");
+    gamesContainer = document.getElementById("gamesContainer");
+    ticTacToeContainer = document.getElementById("ticTacToeContainer");
+    guessingGameContainer = document.getElementById("guessingGameContainer");
+    cookieClickerContainer = document.getElementById("cookieClickerContainer");
+
+    document.getElementById('startButton').addEventListener('click', startTimer);
+    document.getElementById('startTicTacToe').addEventListener('click', startTicTacToe);
+    document.getElementById('checkGuess').addEventListener('click', checkGuess);
+    document.getElementById('startCookieClicker').addEventListener('click', startCookieClicker);
+    document.getElementById('cookieButton').addEventListener('click', clickCookie);
+    document.getElementById('buyUpgrade').addEventListener('click', buyUpgrade);
+});
 
 function startTimer() {
     const userInput = document.getElementById("timeInput").value;
-    time = userInput * 60; 
+    time = userInput * 60;
     if (interval) {
         clearInterval(interval);
     }
@@ -17,17 +29,20 @@ function startTimer() {
         time -= 1;
         if (time <= 0) {
             clearInterval(interval);
-            buttonContainer.style.display = "block"; 
-            gamesContainer.style.display = "none"; 
+            if (buttonContainer) buttonContainer.style.display = "block";
+            if (gamesContainer) gamesContainer.style.display = "none";
         } else {
-            gamesContainer.style.display = "block";
+            if (gamesContainer) gamesContainer.style.display = "block";
         }
-        display.innerHTML =
-            Math.floor(time / 3600).toString().padStart(2, "0") + ":" +
-            Math.floor((time % 3600) / 60).toString().padStart(2, "0") + ":" +
-            Math.floor((time % 60)).toString().padStart(2, "0");
+        if (display) {
+            display.innerHTML =
+                Math.floor(time / 3600).toString().padStart(2, "0") + ":" +
+                Math.floor((time % 3600) / 60).toString().padStart(2, "0") + ":" +
+                Math.floor((time % 60)).toString().padStart(2, "0");
+        }
     }, 1000);
 }
+
 document.getElementById('startButton').addEventListener('click', startTimer);
 function startTicTacToe() {
     ticTacToeContainer.style.display = "block";

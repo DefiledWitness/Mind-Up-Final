@@ -5,7 +5,103 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mini Games</title>
     <style>
-        /* Your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #963bca;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: #ffffff; 
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        p {
+            color: #ffffff; 
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            color: #ffffff; 
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #512da8; 
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+
+        button:hover {
+            background-color: #865dd8; 
+            transform: translateY(-3px); 
+        }
+
+        input[type="number"] {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ffffff; 
+            border-radius: 5px;
+            background-color: transparent;
+            color: #ffffff; 
+        }
+
+        iframe {
+            border: 2px solid #ffffff; 
+            border-radius: 5px;
+        }
+
+        #buttonContainer {
+            text-align: center;
+        }
+
+        #ticTacToeContainer {
+            background-color: #66268b; 
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+        }
+
+        #guessingGameContainer {
+            background-color: #66268b; 
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+        }
+
+        #cookieClickerContainer {
+            background-color: #66268b; 
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+        }
+
+        #startTimerButton {
+            position: sticky;
+            top: 20px;
+            z-index: 999; 
+        }
+
+        #cookieButton {
+            background-image: url('download.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            width: 100px; 
+            height: 100px; 
+        }
+
     </style>
 </head>
 <body>
@@ -29,132 +125,27 @@
     </div>
 
     <div id="ticTacToeContainer" style="display: none;">
-        <table id="ticTacToeBoard">
-            <!-- Tic Tac Toe board will be generated here -->
-        </table>
-        <p id="ticTacToeResult"></p>
+        <iframe id="ticTacToeFrame" src="tic.html" width="800" height="800" frameborder="0"></iframe>
     </div>
 
     <div id="guessingGameContainer" style="display: none;">
-        <!-- Guessing Game content will be generated here -->
+        <h2>Guessing Game</h2>
+        <p>Guess a number between 1 and 100:</p>
+        <input type="number" id="guessInput">
+        <button id="checkGuess">Check Guess</button>
+        <p id="guessResult"></p>
     </div>
 
     <div id="cookieClickerContainer" style="display: none;">
-        <!-- Cookie Clicker content will be generated here -->
+        <h2>Cookie Clicker</h2>
+        <p>Click the cookie to earn points:</p>
+        <button id="cookieButton" ></button>
+        <p>Points: <span id="cookiePoints">0</span></p>
+        <h3>Upgrades</h3>
+        <button id="buyUpgrade">Upgrade (Cost: 10 points)</button>
+        <p>Upgrade Level: <span id="upgradeLevel">0</span></p>
     </div>
 
-    <script>
-        let interval = null;
-        let time = 0;
-        let display, buttonContainer, gamesContainer, ticTacToeContainer, guessingGameContainer, cookieClickerContainer;
-
-        document.addEventListener('DOMContentLoaded', function () {
-            display = document.getElementById("display");
-            buttonContainer = document.getElementById("buttonContainer");
-            gamesContainer = document.getElementById("gamesContainer");
-            ticTacToeContainer = document.getElementById("ticTacToeContainer");
-            guessingGameContainer = document.getElementById("guessingGameContainer");
-            cookieClickerContainer = document.getElementById("cookieClickerContainer");
-
-            document.getElementById('startButton').addEventListener('click', startTimer);
-            document.getElementById('startTicTacToe').addEventListener('click', startTicTacToe);
-        });
-
-        function startTimer() {
-            const userInput = document.getElementById("timeInput").value;
-            time = userInput * 60;
-            if (interval) {
-                clearInterval(interval);
-            }
-            interval = setInterval(() => {
-                time -= 1;
-                if (time <= 0) {
-                    clearInterval(interval);
-                    if (buttonContainer) buttonContainer.style.display = "block";
-                    if (gamesContainer) gamesContainer.style.display = "none";
-                } else {
-                    if (gamesContainer) gamesContainer.style.display = "block";
-                }
-                if (display) {
-                    display.innerHTML =
-                        Math.floor(time / 3600).toString().padStart(2, "0") + ":" +
-                        Math.floor((time % 3600) / 60).toString().padStart(2, "0") + ":" +
-                        Math.floor((time % 60)).toString().padStart(2, "0");
-                }
-            }, 1000);
-        }
-
-        function startTicTacToe() {
-            ticTacToeContainer.style.display = "block";
-            guessingGameContainer.style.display = "none";
-            cookieClickerContainer.style.display = "none";
-            const board = document.getElementById("ticTacToeBoard");
-            const cells = [];
-            let currentPlayer = "X";
-            let moves = 0;
-
-            for (let i = 0; i < 3; i++) {
-                const row = document.createElement("tr");
-                cells[i] = [];
-                for (let j = 0; j < 3; j++) {
-                    const cell = document.createElement("td");
-                    cell.textContent = "";
-                    cell.onclick = () => {
-                        if (!cell.textContent) {
-                            cell.textContent = currentPlayer;
-                            moves++;
-                            if (checkWinner(cells, currentPlayer)) {
-                                document.getElementById("ticTacToeResult").textContent = `${currentPlayer} wins!`;
-                                resetTicTacToe(cells);
-                            } else if (moves === 9) {
-                                document.getElementById("ticTacToeResult").textContent = "It's a draw!";
-                                resetTicTacToe(cells);
-                            } else {
-                                currentPlayer = currentPlayer === "X" ? "O" : "X";
-                            }
-                        }
-                    };
-                    cells[i][j] = cell;
-                    row.appendChild(cell);
-                }
-                board.appendChild(row);
-            }
-        }
-
-        function checkWinner(cells, player) {
-            for (let i = 0; i < 3; i++) {
-                if (cells[i][0].textContent === player &&
-                    cells[i][1].textContent === player &&
-                    cells[i][2].textContent === player) {
-                    return true; 
-                }
-                if (cells[0][i].textContent === player &&
-                    cells[1][i].textContent === player &&
-                    cells[2][i].textContent === player) {
-                    return true; 
-                }
-            }
-            if (cells[0][0].textContent === player &&
-                cells[1][1].textContent === player &&
-                cells[2][2].textContent === player) {
-                return true; 
-            }
-            if (cells[0][2].textContent === player &&
-                cells[1][1].textContent === player &&
-                cells[2][0].textContent === player) {
-                return true; 
-            }
-            return false;
-        }
-
-        function resetTicTacToe(cells) {
-            for (let i = 0; i < 3; i++) {
-                for (let j = 0; j < 3; j++) {
-                    cells[i][j].textContent = "";
-                }
-            }
-            document.getElementById("ticTacToeResult").textContent = "";
-        }
-    </script>
 </body>
+<script src="Breaktime.js"></script>
 </html>
